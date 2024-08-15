@@ -1,0 +1,7 @@
+POST http://localhost:8000/artwork
+Content-Type: application/json
+
+{
+    "title": "The Starry Night",
+    "description": "The Starry Night is an oil on canvas painting by Dutch Post-Impressionist painter Vincent van Gogh."
+}
