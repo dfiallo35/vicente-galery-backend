@@ -1,0 +1,14 @@
+{
+    "builds": [
+        {
+            "src": "api/endpoints.py",
+            "use": "@vercel/python"
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "api/endpoints.py"
+        }
+    ]
+}
