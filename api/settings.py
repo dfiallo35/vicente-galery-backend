@@ -1,6 +1,6 @@
 import inject
 from inject import Binder
-from inject import Injector
+from pydantic_settings import BaseSettings
 
 from api.services import IBaseService
 from api.services import InMemoryService
@@ -10,11 +10,15 @@ DEPENDENCIES = {
     IBaseService: InMemoryService
 }
 
+class Settings(BaseSettings):
+    API_V1_STR: str = "/api/v1"
 
-def configure(binder: Binder):
-    for interface, implementation in DEPENDENCIES.items():
-        binder.bind(interface, implementation())
+    
+    def configure(binder: Binder):
+        for interface, implementation in DEPENDENCIES.items():
+            binder.bind(interface, implementation())
 
-injector = Injector(configure)
-inject.set_injector(injector)
-inject.configure(configure)
+    inject.configure(configure)
+
+
+settings = Settings()
