@@ -1,0 +1,23 @@
+# https://taskfile.dev
+
+version: '3'
+
+
+tasks:
+  openapi:
+    desc: "Export openapi.yaml"
+    sumary: "Export openapi.yaml"
+    cmds:
+      - python utils.py yaml
+
+  venv:
+    desc: "Create virtual environment"
+    sumary: "Create virtual environment"
+    cmds:
+      - python -m venv .venv
+  
+  install:
+    desc: "Install dependencies"
+    sumary: "Install dependencies"
+    cmds:
+      - pip install -r requirements.txt

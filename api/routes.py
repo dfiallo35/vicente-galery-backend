@@ -1,4 +1,5 @@
 from fastapi.routing import APIRouter
+
 from api.endpoints import router as artwork_router
 
 
