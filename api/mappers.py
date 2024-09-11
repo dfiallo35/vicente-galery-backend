@@ -18,7 +18,14 @@ class BaseMapper(ABC):
 
 class ArtworkMapper(BaseMapper):
     def to_entity(self, artwork_input: ArtworkInput) -> Artwork:
-        return Artwork(title=artwork_input.title, description=artwork_input.description)
+        return Artwork(
+            title=artwork_input.title,
+            description=artwork_input.description
+        )
 
     def to_api(self, artwork: Artwork) -> ArtworkOutput:
-        return ArtworkOutput(id=artwork.id, title=artwork.title, description=artwork.description)
+        return ArtworkOutput(
+            id=artwork.id,
+            title=artwork.title,
+            description=artwork.description
+        )

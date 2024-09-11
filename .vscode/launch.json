@@ -9,7 +9,7 @@
             "cwd": "${workspaceFolder}/",
             "python": "${workspaceFolder}/.venv/bin/python",
             "args": [
-                "api.main:app",
+                "main:app",
                 "--port",
                 "8000",
                 "--reload"
