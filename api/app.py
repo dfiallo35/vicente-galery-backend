@@ -5,7 +5,6 @@ from api.settings import settings
 from api.routes import api_router
 
 
-
 def create_app():
     app = FastAPI()
 

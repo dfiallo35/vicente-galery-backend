@@ -4,7 +4,7 @@ from pydantic import BaseModel
 
 
 class Artwork(BaseModel):
-    id: Optional[int] = None
+    id: Optional[str] = None
     title: str
     description: str
 
@@ -15,6 +15,6 @@ class ArtworkInput(BaseModel):
 
 
 class ArtworkOutput(BaseModel):
-    id: int
+    id: str
     title: str
     description: str

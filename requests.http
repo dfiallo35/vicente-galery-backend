@@ -13,5 +13,8 @@ GET http://localhost:8000/api/v1/artwork
 
 ###
 
-GET http://localhost:8000/api/v1/artwork/1
+GET http://localhost:8000/api/v1/artwork/08b7a0fe-fa30-46df-b10b-feb089f7fc23
 
+###
+
+DELETE http://localhost:8000/api/v1/artwork/98afe6e3-ea0b-4d92-a504-0fc44f5e4584
