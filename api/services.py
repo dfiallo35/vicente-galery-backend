@@ -5,6 +5,8 @@ from abc import ABC
 from abc import abstractmethod
 
 from api.models import Artwork
+from api.mappers import ArtworkMapper
+from api.repositories import ArtworkRepository
 
 
 class IBaseService(ABC):
@@ -57,3 +59,34 @@ class InMemoryService(IBaseService):
     
     async def list(self) -> List[Artwork]:
         return self.data
+
+
+class PostgresService(IBaseService):
+    repository: ArtworkRepository
+    mapper: ArtworkMapper
+
+    def __init__(self):
+        self.repository = ArtworkRepository()
+        self.mapper = ArtworkMapper()
+
+    async def create(self, artwork: Artwork) -> Artwork:
+        artwork_table = self.mapper.entity_to_table(artwork)
+        result = await self.repository.create(artwork_table)
+        return self.mapper.table_to_entity(result)
+    
+    async def delete(self, id: str) -> None:
+        result = await self.repository.delete(id)
+        return result
+    
+    async def update(self, id: str, artwork: Artwork) -> Artwork:
+        ...
+    
+    async def get(self, id: str) -> Artwork | None:
+        result = await self.repository.get(id)
+        if result:
+            return self.mapper.table_to_entity(result)
+        return None
+
+    async def list(self) -> List[Artwork]:
+        results = await self.repository.list()
+        return [self.mapper.table_to_entity(artwork) for artwork in results]
