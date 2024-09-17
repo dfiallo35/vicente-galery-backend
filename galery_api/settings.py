@@ -1,23 +1,11 @@
-import inject
-from inject import Binder
-from pydantic_settings import BaseSettings
-
 from galery_api.application.services import IBaseService
 from galery_api.application.services import PostgresService
+
+from core.settings import Settings
 
 
 DEPENDENCIES = {
     IBaseService: PostgresService
 }
 
-class Settings(BaseSettings):
-    API_V1_STR: str = "/api/v1"
-    
-    def configure(binder: Binder):
-        for interface, implementation in DEPENDENCIES.items():
-            binder.bind(interface, implementation())
-
-    inject.configure(configure)
-
-
-settings = Settings()
+settings = Settings(DEPENDENCIES=DEPENDENCIES)

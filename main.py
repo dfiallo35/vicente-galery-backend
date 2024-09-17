@@ -1,6 +1,7 @@
 from galery_api.presentation.api import router
+from galery_api.settings import settings
 
-from core.presentation.app import create_app
+from core.presentation.app import BaseApp
 
-
-app = create_app(router=router)
+base_app = BaseApp(router=router, settings=settings)
+app = base_app.app

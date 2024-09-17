@@ -1,21 +1,32 @@
 from fastapi import FastAPI
 from fastapi.routing import APIRouter
 from fastapi.middleware.cors import CORSMiddleware
+from pydantic_settings import BaseSettings
 
-from galery_api.settings import settings
 
+class BaseApp:
+    app: FastAPI
+    settings: BaseSettings
 
-def create_app(router: APIRouter):
-    app = FastAPI()
+    def __init__(self, router: APIRouter, settings: BaseSettings):
+        self.setup_settings(settings)
+        self.app = self.create_app(router)
 
-    app.add_middleware(
-        CORSMiddleware,
-        allow_origins=["*"],
-        allow_credentials=True,
-        allow_methods=["*"],
-        allow_headers=["*"],
-    )
+    def create_app(self, router: APIRouter):
+        app = FastAPI()
 
-    app.include_router(router, prefix=settings.API_V1_STR)
+        app.add_middleware(
+            CORSMiddleware,
+            allow_origins=["*"],
+            allow_credentials=True,
+            allow_methods=["*"],
+            allow_headers=["*"],
+        )
 
-    return app
+        app.include_router(router, prefix=self.settings.API_V1_STR)
+        return app
+    
+    def setup_settings(self, settings: BaseSettings):
+        self.settings = settings
+        self.settings.setup()
+    

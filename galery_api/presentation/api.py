@@ -10,7 +10,7 @@ from galery_api.domain.models import ArtworkOutput
 from galery_api.domain.mappers import ArtworkMapper
 
 
-router = APIRouter(prefix="/artwork")
+router = APIRouter()
 
 
 @router.get("/health")
@@ -19,7 +19,7 @@ async def health():
 
 
 @router.post(
-    "/",
+    "/artwork",
     responses={
         status.HTTP_201_CREATED: {"model": ArtworkOutput},
     }
@@ -33,7 +33,7 @@ async def create_artwork(artwork: ArtworkInput):
 
 
 @router.get(
-    "/",
+    "/artwork",
     responses={
         status.HTTP_200_OK: {"model": List[ArtworkOutput]},
     }
@@ -46,7 +46,7 @@ async def list_artwork():
 
 
 @router.get(
-    "/{id}",
+    "/artwork/{id}",
     responses={
         status.HTTP_200_OK: {"model": ArtworkOutput},
         status.HTTP_404_NOT_FOUND: {}
@@ -63,7 +63,7 @@ async def get_artwork(id: str, response: Response):
 
 
 @router.patch(
-    "/{id}",
+    "/artwork/{id}",
     responses={
         status.HTTP_200_OK: {"model": ArtworkOutput},
     }
@@ -77,7 +77,7 @@ async def update_artwork(id: str, artwork: ArtworkInput):
 
 
 @router.delete(
-    "/{id}",
+    "/artwork/{id}",
     responses={
         status.HTTP_200_OK: {"model": None},
     }
