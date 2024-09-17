@@ -1,8 +1,8 @@
 from typing import List
 
-from api.domain.models import Artwork
-from api.infrastructure.postgres.repositories import ArtworkRepository
-from api.infrastructure.postgres.mappers import ArtworkDataBaseMapper
+from galery_api.domain.models import Artwork
+from galery_api.infrastructure.postgres.repositories import ArtworkRepository
+from galery_api.infrastructure.postgres.mappers import ArtworkDataBaseMapper
 
 from core.application.services import IBaseService
 

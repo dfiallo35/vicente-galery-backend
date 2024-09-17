@@ -2,7 +2,7 @@ from sqlalchemy import select
 from sqlalchemy import delete
 from sqlalchemy import update
 
-from api.infrastructure.postgres.tables import ArtworkTable
+from galery_api.infrastructure.postgres.tables import ArtworkTable
 
 from core.infrastructure.postgres.repositories import BaseRepository
 

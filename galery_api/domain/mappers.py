@@ -1,6 +1,6 @@
-from api.domain.models import Artwork
-from api.domain.models import ArtworkInput
-from api.domain.models import ArtworkOutput
+from galery_api.domain.models import Artwork
+from galery_api.domain.models import ArtworkInput
+from galery_api.domain.models import ArtworkOutput
 
 from core.domain.mappers import BaseMapper
 

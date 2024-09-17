@@ -1,5 +1,5 @@
-from api.domain.models import Artwork
-from api.infrastructure.postgres.tables import ArtworkTable
+from galery_api.domain.models import Artwork
+from galery_api.infrastructure.postgres.tables import ArtworkTable
 
 from core.infrastructure.postgres.mappers import BaseMapper
 

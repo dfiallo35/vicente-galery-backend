@@ -5,6 +5,11 @@ components:
         description:
           title: Description
           type: string
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
         title:
           title: Title
           type: string
@@ -20,7 +25,7 @@ components:
           type: string
         id:
           title: Id
-          type: integer
+          type: string
         title:
           title: Title
           type: string
@@ -66,16 +71,6 @@ info:
   version: 1.0.0
 openapi: 3.0.3
 paths:
-  /api/v1/:
-    get:
-      operationId: health_api_v1__get
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: Successful Response
-      summary: Health
   /api/v1/artwork/:
     get:
       operationId: list_artwork_api_v1_artwork__get
@@ -117,6 +112,16 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
           description: Validation Error
       summary: Create Artwork
+  /api/v1/artwork/health:
+    get:
+      operationId: health_api_v1_artwork_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Health
   /api/v1/artwork/{id}:
     delete:
       operationId: delete_artwork_api_v1_artwork__id__delete
@@ -126,7 +131,7 @@ paths:
         required: true
         schema:
           title: Id
-          type: integer
+          type: string
       responses:
         '200':
           content:
@@ -148,7 +153,7 @@ paths:
         required: true
         schema:
           title: Id
-          type: integer
+          type: string
       responses:
         '200':
           content:
@@ -156,6 +161,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/ArtworkOutput'
           description: Successful Response
+        '404':
+          description: Not Found
         '422':
           content:
             application/json:
@@ -171,7 +178,7 @@ paths:
         required: true
         schema:
           title: Id
-          type: integer
+          type: string
       requestBody:
         content:
           application/json:

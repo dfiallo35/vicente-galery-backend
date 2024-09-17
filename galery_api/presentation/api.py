@@ -4,14 +4,18 @@ from fastapi.routing import APIRouter
 from fastapi import status
 from fastapi import Response
 
-from api.application.services import IBaseService
-from api.domain.models import ArtworkInput
-from api.domain.models import ArtworkOutput
-from api.domain.mappers import ArtworkMapper
+from galery_api.application.services import IBaseService
+from galery_api.domain.models import ArtworkInput
+from galery_api.domain.models import ArtworkOutput
+from galery_api.domain.mappers import ArtworkMapper
 
 
-router = APIRouter()
-service: IBaseService = inject.instance(IBaseService)
+router = APIRouter(prefix="/artwork")
+
+
+@router.get("/health")
+async def health():
+    return {"status": "ok"}
 
 
 @router.post(
@@ -21,6 +25,7 @@ service: IBaseService = inject.instance(IBaseService)
     }
 )
 async def create_artwork(artwork: ArtworkInput):
+    service: IBaseService = inject.instance(IBaseService)
     mapper = ArtworkMapper()
     artwork_entity = mapper.api_to_entity(artwork)
     artwork_entity = await service.create(artwork_entity)
@@ -34,6 +39,7 @@ async def create_artwork(artwork: ArtworkInput):
     }
 )
 async def list_artwork():
+    service: IBaseService = inject.instance(IBaseService)
     mapper = ArtworkMapper()
     artworks = await service.list()
     return [mapper.entity_to_api(artwork) for artwork in artworks]
@@ -47,6 +53,7 @@ async def list_artwork():
     }
 )
 async def get_artwork(id: str, response: Response):
+    service: IBaseService = inject.instance(IBaseService)
     mapper = ArtworkMapper()
     artwork = await service.get(id)
     if not artwork:
@@ -62,6 +69,7 @@ async def get_artwork(id: str, response: Response):
     }
 )
 async def update_artwork(id: str, artwork: ArtworkInput):
+    service: IBaseService = inject.instance(IBaseService)
     mapper = ArtworkMapper()
     artwork_entity = mapper.api_to_entity(artwork)
     artwork_entity = await service.update(id, artwork_entity)
@@ -75,6 +83,7 @@ async def update_artwork(id: str, artwork: ArtworkInput):
     }
 )
 async def delete_artwork(id: str, response: Response):
+    service: IBaseService = inject.instance(IBaseService)
     result = await service.delete(id)
     if not result:
         response.status_code = status.HTTP_404_NOT_FOUND

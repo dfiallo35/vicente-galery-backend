@@ -1,11 +1,11 @@
 from fastapi import FastAPI
+from fastapi.routing import APIRouter
 from fastapi.middleware.cors import CORSMiddleware
 
-from api.settings import settings
-from api.routes import api_router
+from galery_api.settings import settings
 
 
-def create_app():
+def create_app(router: APIRouter):
     app = FastAPI()
 
     app.add_middleware(
@@ -16,6 +16,6 @@ def create_app():
         allow_headers=["*"],
     )
 
-    app.include_router(api_router, prefix=settings.API_V1_STR)
+    app.include_router(router, prefix=settings.API_V1_STR)
 
     return app

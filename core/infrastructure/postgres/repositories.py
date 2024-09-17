@@ -2,7 +2,7 @@ from abc import ABC
 from abc import abstractmethod
 from decouple import config
 
-from api.infrastructure.postgres.tables import BaseTable
+from galery_api.infrastructure.postgres.tables import BaseTable
 
 # TODO: fix db connection
 from core.infrastructure.postgres.database import DataBase
