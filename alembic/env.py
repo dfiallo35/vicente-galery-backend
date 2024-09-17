@@ -9,7 +9,7 @@ from alembic import context
 
 from decouple import config as env_config
 
-from api.tables import BaseTable
+from api.infrastructure.postgres.tables import BaseTable
 
 
 # this is the Alembic Config object, which provides

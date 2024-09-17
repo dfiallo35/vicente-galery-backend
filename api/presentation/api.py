@@ -4,10 +4,10 @@ from fastapi.routing import APIRouter
 from fastapi import status
 from fastapi import Response
 
-from api.services import IBaseService
-from api.models import ArtworkInput
-from api.models import ArtworkOutput
-from api.mappers import ArtworkMapper
+from api.application.services import IBaseService
+from api.domain.models import ArtworkInput
+from api.domain.models import ArtworkOutput
+from api.domain.mappers import ArtworkMapper
 
 
 router = APIRouter()

@@ -1,34 +1,10 @@
-
 from typing import List
 
-from abc import ABC
-from abc import abstractmethod
+from api.domain.models import Artwork
+from api.infrastructure.postgres.repositories import ArtworkRepository
+from api.infrastructure.postgres.mappers import ArtworkDataBaseMapper
 
-from api.models import Artwork
-from api.mappers import ArtworkMapper
-from api.repositories import ArtworkRepository
-
-
-class IBaseService(ABC):
-    @abstractmethod
-    async def create(self):
-        raise NotImplementedError
-    
-    @abstractmethod
-    async def delete(self):
-        raise NotImplementedError
-    
-    @abstractmethod
-    async def update(self):
-        raise NotImplementedError
-    
-    @abstractmethod
-    async def get(self):
-        raise NotImplementedError
-    
-    @abstractmethod
-    async def list(self):
-        raise NotImplementedError
+from core.application.services import IBaseService
 
 
 class InMemoryService(IBaseService):
@@ -63,11 +39,11 @@ class InMemoryService(IBaseService):
 
 class PostgresService(IBaseService):
     repository: ArtworkRepository
-    mapper: ArtworkMapper
+    mapper: ArtworkDataBaseMapper
 
     def __init__(self):
         self.repository = ArtworkRepository()
-        self.mapper = ArtworkMapper()
+        self.mapper = ArtworkDataBaseMapper()
 
     async def create(self, artwork: Artwork) -> Artwork:
         artwork_table = self.mapper.entity_to_table(artwork)

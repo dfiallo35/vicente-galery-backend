@@ -2,8 +2,8 @@ import inject
 from inject import Binder
 from pydantic_settings import BaseSettings
 
-from api.services import IBaseService
-from api.services import PostgresService
+from api.application.services import IBaseService
+from api.application.services import PostgresService
 
 
 DEPENDENCIES = {

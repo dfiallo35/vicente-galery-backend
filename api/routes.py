@@ -1,6 +1,6 @@
 from fastapi.routing import APIRouter
 
-from api.endpoints import router as artwork_router
+from api.presentation.api import router as artwork_router
 
 
 api_router = APIRouter()
