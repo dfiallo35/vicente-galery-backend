@@ -1,11 +1,11 @@
-from galery_api.application.services import IBaseService
-from galery_api.application.services import PostgresService
+from galery_api.application.services import ArtworkService
 
 from core.settings import Settings
+from core.application.services import IBaseService
 
 
 DEPENDENCIES = {
-    IBaseService: PostgresService
+    IBaseService: ArtworkService
 }
 
 settings = Settings(DEPENDENCIES=DEPENDENCIES)

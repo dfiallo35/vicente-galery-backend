@@ -6,11 +6,12 @@ from fastapi import status
 from fastapi import Response
 from fastapi.routing import APIRouter
 
-from galery_api.application.services import IBaseService
 from galery_api.domain.models import ArtworkInput
 from galery_api.domain.models import ArtworkOutput
 from galery_api.domain.mappers import ArtworkMapper
 from galery_api.domain.filters import ArtworkFilter
+
+from core.application.services import IBaseService
 
 
 router = APIRouter()
