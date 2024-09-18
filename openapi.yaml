@@ -71,9 +71,48 @@ info:
   version: 1.0.0
 openapi: 3.0.3
 paths:
-  /api/v1/artwork/:
+  /api/v1/artwork:
     get:
-      operationId: list_artwork_api_v1_artwork__get
+      operationId: list_artwork_api_v1_artwork_get
+      parameters:
+      - in: query
+        name: page
+        required: false
+        schema:
+          default: 1
+          title: Page
+          type: integer
+      - in: query
+        name: size
+        required: false
+        schema:
+          default: 10
+          title: Size
+          type: integer
+      - in: query
+        name: order_by
+        required: false
+        schema:
+          title: Order By
+          type: string
+      - in: query
+        name: entity_ids
+        required: false
+        schema:
+          anyOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: Entity Ids
+      - in: query
+        name: keyword
+        required: false
+        schema:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Keyword
       responses:
         '200':
           content:
@@ -81,12 +120,18 @@ paths:
               schema:
                 items:
                   $ref: '#/components/schemas/ArtworkOutput'
-                title: Response 200 List Artwork Api V1 Artwork  Get
+                title: Response 200 List Artwork Api V1 Artwork Get
                 type: array
           description: Successful Response
+        '422':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HTTPValidationError'
+          description: Validation Error
       summary: List Artwork
     post:
-      operationId: create_artwork_api_v1_artwork__post
+      operationId: create_artwork_api_v1_artwork_post
       requestBody:
         content:
           application/json:
@@ -112,16 +157,6 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
           description: Validation Error
       summary: Create Artwork
-  /api/v1/artwork/health:
-    get:
-      operationId: health_api_v1_artwork_health_get
-      responses:
-        '200':
-          content:
-            application/json:
-              schema: {}
-          description: Successful Response
-      summary: Health
   /api/v1/artwork/{id}:
     delete:
       operationId: delete_artwork_api_v1_artwork__id__delete
@@ -199,3 +234,13 @@ paths:
                 $ref: '#/components/schemas/HTTPValidationError'
           description: Validation Error
       summary: Update Artwork
+  /api/v1/health:
+    get:
+      operationId: health_api_v1_health_get
+      responses:
+        '200':
+          content:
+            application/json:
+              schema: {}
+          description: Successful Response
+      summary: Health
