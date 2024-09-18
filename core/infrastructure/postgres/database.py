@@ -9,6 +9,7 @@ CONNECTION_TIMEOUT = 60
 CACHE_SIZE = 0
 
 
+# TODO: Investigate about pools and cache size
 class DataBase:
     url: str
     async_session: AsyncSession
@@ -20,6 +21,7 @@ class DataBase:
             self.engine = create_async_engine(
                 self.url,
                 poolclass=NullPool,
+                pool_pre_ping=True,
                 connect_args={
                     "timeout": CONNECTION_TIMEOUT,
                     "statement_cache_size": CACHE_SIZE

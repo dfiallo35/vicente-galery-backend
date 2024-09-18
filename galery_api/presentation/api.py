@@ -1,13 +1,16 @@
 import inject
 from typing import List
-from fastapi.routing import APIRouter
+from typing import Annotated
+from fastapi import Query
 from fastapi import status
 from fastapi import Response
+from fastapi.routing import APIRouter
 
 from galery_api.application.services import IBaseService
 from galery_api.domain.models import ArtworkInput
 from galery_api.domain.models import ArtworkOutput
 from galery_api.domain.mappers import ArtworkMapper
+from galery_api.domain.filters import ArtworkFilter
 
 
 router = APIRouter()
@@ -38,10 +41,10 @@ async def create_artwork(artwork: ArtworkInput):
         status.HTTP_200_OK: {"model": List[ArtworkOutput]},
     }
 )
-async def list_artwork():
+async def list_artwork(filter_query: Annotated[ArtworkFilter, Query()]):
     service: IBaseService = inject.instance(IBaseService)
     mapper = ArtworkMapper()
-    artworks = await service.list()
+    artworks = await service.list(filter_query=filter_query)
     return [mapper.entity_to_api(artwork) for artwork in artworks]
 
 

@@ -1,6 +1,7 @@
 from typing import List
 
 from galery_api.domain.models import Artwork
+from galery_api.domain.filters import ArtworkFilter
 from galery_api.infrastructure.postgres.repositories import ArtworkRepository
 from galery_api.infrastructure.postgres.mappers import ArtworkDataBaseMapper
 
@@ -54,6 +55,7 @@ class PostgresService(IBaseService):
         result = await self.repository.delete(id)
         return result
     
+    # TODO: Implement update method
     async def update(self, id: str, artwork: Artwork) -> Artwork:
         ...
     
@@ -63,6 +65,6 @@ class PostgresService(IBaseService):
             return self.mapper.table_to_entity(result)
         return None
 
-    async def list(self) -> List[Artwork]:
-        results = await self.repository.list()
+    async def list(self, filter_query: ArtworkFilter) -> List[Artwork]:
+        results = await self.repository.list(filter_query=filter_query)
         return [self.mapper.table_to_entity(artwork) for artwork in results]

@@ -1,6 +1,8 @@
 from abc import ABC
 from abc import abstractmethod
 
+from core.domain.filters import IBaseFilter
+
 
 class IBaseService(ABC):
     @abstractmethod
@@ -20,5 +22,5 @@ class IBaseService(ABC):
         raise NotImplementedError()
     
     @abstractmethod
-    async def list(self):
+    async def list(self, filter_query: IBaseFilter):
         raise NotImplementedError()

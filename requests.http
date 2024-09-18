@@ -8,7 +8,7 @@ Content-Type: application/json
 
 ###
 
-GET http://localhost:8000/api/v1/artwork
+GET http://localhost:8000/api/v1/artwork?entity_ids=08b7a0fe-fa30-46df-b10b-feb089f7fc25
 
 
 ###
