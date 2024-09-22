@@ -11,9 +11,9 @@ CACHE_SIZE = 0
 
 # TODO: Investigate about pools and cache size
 class DataBase:
-    url: str
-    async_session: AsyncSession
-    engine: AsyncEngine
+    url: str = None
+    async_session: AsyncSession = None
+    engine: AsyncEngine = None
 
     def __init__(self, url):
         self.url = url

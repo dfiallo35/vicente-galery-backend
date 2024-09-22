@@ -5,8 +5,8 @@ from pydantic_settings import BaseSettings
 
 
 class BaseApp:
-    app: FastAPI
-    settings: BaseSettings
+    app: FastAPI = None
+    settings: BaseSettings = None
 
     def __init__(self, router: APIRouter, settings: BaseSettings):
         self.setup_settings(settings)

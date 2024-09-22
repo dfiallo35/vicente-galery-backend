@@ -30,17 +30,17 @@ class IBaseService(ABC):
         raise NotImplementedError()
 
 
-class SqlService(IBaseService):
-    repository: BaseRepository
-    mapper: IBaseMapper
+class BaseService(IBaseService):
+    repository: BaseRepository = None
+    mapper: IBaseMapper = None
     
     async def create(self, entity: BaseEntity) -> BaseEntity:
-        entity_table = self.mapper().entity_to_table(entity)
-        result = await self.repository().create(entity_table)
-        return self.mapper().table_to_entity(result)
+        entity_table = self.mapper.entity_to_table(entity)
+        result = await self.repository.create(entity_table)
+        return self.mapper.table_to_entity(result)
     
     async def delete(self, id: str) -> None:
-        result = await self.repository().delete(id)
+        result = await self.repository.delete(id)
         return result
     
     # TODO: Implement update method
@@ -48,11 +48,11 @@ class SqlService(IBaseService):
         ...
     
     async def get(self, id: str) -> BaseEntity | None:
-        result = await self.repository().get(id)
+        result = await self.repository.get(id)
         if result:
-            return self.mapper().table_to_entity(result)
+            return self.mapper.table_to_entity(result)
         return None
 
     async def list(self, filter_query: IBaseFilter) -> List[BaseEntity]:
-        results = await self.repository().list(filter_query=filter_query)
-        return [self.mapper().table_to_entity(item) for item in results]
+        results = await self.repository.list(filter_query=filter_query)
+        return [self.mapper.table_to_entity(item) for item in results]

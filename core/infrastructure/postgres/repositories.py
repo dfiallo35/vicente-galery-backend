@@ -19,9 +19,8 @@ DATABASE_URL = config("DATABASE_URL", "")
 
 
 class IBaseRepository(ABC):
-    table: BaseTable
-    db: DataBase
-    filter_mapper: IBaseFilterMapper
+    table_class: BaseTable = None
+    filter_mapper: IBaseFilterMapper = None
 
     def __init__(self):
         self.db = DataBase(DATABASE_URL)
@@ -37,11 +36,11 @@ class IBaseRepository(ABC):
                 return result
     
     async def get_conditions(self, filter_query: IBaseFilter):
-        conditions = self.filter_mapper().filter_to_conditions(filter_query)
+        conditions = self.filter_mapper.filter_to_conditions(filter_query)
         return conditions
     
     async def build_query(self, conditions: List):
-        query = select(self.table)
+        query = select(self.table_class)
         for condition in conditions:
             query = query.where(condition)
         return query
@@ -92,17 +91,17 @@ class BaseRepository(IBaseRepository):
     async def update(self, id: str):
         async with self.db.async_session() as session:
             async with session.begin():
-                query = update(self.table).where(self.table.id == id)
+                query = update(self.table_class).where(self.table_class.id == id)
 
     async def delete(self, id: str):
         async with self.db.async_session() as session:
             async with session.begin():
-                query = delete(self.table).where(self.table.id == id)
+                query = delete(self.table_class).where(self.table_class.id == id)
                 await self.execute_query(query)
             return True
     
     async def get(self, id: str):
-        query = select(self.table).where(self.table.id == id)
+        query = select(self.table_class).where(self.table_class.id == id)
         results = await self.execute_query(query)
         for (item,) in results:
             return item
