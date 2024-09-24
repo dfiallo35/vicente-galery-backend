@@ -31,9 +31,9 @@ async def health():
 async def create_artwork(artwork: ArtworkInput):
     service: IArtworkService = inject.instance(IArtworkService)
     mapper = ArtworkMapper()
-    artwork_entity = mapper.api_to_entity(artwork)
+    artwork_entity = await mapper.api_to_entity(artwork)
     artwork_entity = await service.create(artwork_entity)
-    return mapper.entity_to_api(artwork_entity)
+    return await mapper.entity_to_api(artwork_entity)
 
 
 @router.get(
@@ -46,7 +46,7 @@ async def list_artwork(filter_query: Annotated[ArtworkFilter, Query()]):
     service: IArtworkService = inject.instance(IArtworkService)
     mapper = ArtworkMapper()
     artworks = await service.list(filter_query=filter_query)
-    return [mapper.entity_to_api(artwork) for artwork in artworks]
+    return [await mapper.entity_to_api(artwork) for artwork in artworks]
 
 
 @router.get(
@@ -63,7 +63,7 @@ async def get_artwork(id: str, response: Response):
     if not artwork:
         response.status_code = status.HTTP_404_NOT_FOUND
         return {"details": f"Artwork with id \"{id}\" not found"}
-    return mapper.entity_to_api(artwork)
+    return await mapper.entity_to_api(artwork)
 
 
 @router.patch(
@@ -75,9 +75,9 @@ async def get_artwork(id: str, response: Response):
 async def update_artwork(id: str, artwork: ArtworkUpdate):
     service: IArtworkService = inject.instance(IArtworkService)
     mapper = ArtworkMapper()
-    changes = mapper.model_dump(artwork)
+    changes = await mapper.model_dump(artwork)
     artwork_entity = await service.update(id, changes)
-    return mapper.entity_to_api(artwork_entity)
+    return await mapper.entity_to_api(artwork_entity)
 
 
 @router.delete(

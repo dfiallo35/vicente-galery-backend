@@ -37,7 +37,7 @@ class IBaseRepository(ABC):
                 return result
     
     async def get_conditions(self, filter_query: IBaseFilter):
-        conditions = self.filter_mapper.filter_to_conditions(filter_query)
+        conditions = await self.filter_mapper.filter_to_conditions(filter_query)
         return conditions
     
     async def build_query(self, conditions: List):

@@ -7,14 +7,14 @@ from core.infrastructure.postgres.mappers import IBaseFilterMapper
 
 
 class ArtworkDataBaseMapper(IBaseMapper):
-    def entity_to_table(self, artwork: Artwork) -> ArtworkTable:
+    async def entity_to_table(self, artwork: Artwork) -> ArtworkTable:
         return ArtworkTable(
             id=artwork.id,
             title=artwork.title,
             description=artwork.description
         )
     
-    def table_to_entity(self, artwork_table: ArtworkTable) -> Artwork:
+    async def table_to_entity(self, artwork_table: ArtworkTable) -> Artwork:
         return Artwork(
             id=str(artwork_table.id),
             title=artwork_table.title,
@@ -23,7 +23,7 @@ class ArtworkDataBaseMapper(IBaseMapper):
 
 
 class ArtworkFilterMapper(IBaseFilterMapper):
-    def filter_to_conditions(self, filter_query: ArtworkFilter) -> list:
+    async def filter_to_conditions(self, filter_query: ArtworkFilter) -> list:
         conditions = []
         if filter_query.entity_ids:
             conditions.append(ArtworkTable.id.in_(filter_query.entity_ids))

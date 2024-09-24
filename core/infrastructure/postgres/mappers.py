@@ -6,15 +6,15 @@ from core.domain.filters import IBaseFilter
 
 class IBaseMapper(ABC):    
     @abstractmethod
-    def entity_to_table(self):
+    async def entity_to_table(self):
         raise NotImplementedError()
     
     @abstractmethod
-    def table_to_entity(self):
+    async def table_to_entity(self):
         raise NotImplementedError()
 
 
 class IBaseFilterMapper(ABC):    
     @abstractmethod
-    def filter_to_conditions(self, filter_query: IBaseFilter) -> List:
+    async def filter_to_conditions(self, filter_query: IBaseFilter) -> List:
         raise NotImplementedError()
