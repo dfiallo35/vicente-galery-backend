@@ -7,6 +7,7 @@ from fastapi import Response
 from fastapi.routing import APIRouter
 
 from galery_api.domain.models import ArtworkInput
+from galery_api.domain.models import ArtworkUpdate
 from galery_api.domain.models import ArtworkOutput
 from galery_api.domain.mappers import ArtworkMapper
 from galery_api.domain.filters import ArtworkFilter
@@ -71,11 +72,11 @@ async def get_artwork(id: str, response: Response):
         status.HTTP_200_OK: {"model": ArtworkOutput},
     }
 )
-async def update_artwork(id: str, artwork: ArtworkInput):
+async def update_artwork(id: str, artwork: ArtworkUpdate):
     service: IArtworkService = inject.instance(IArtworkService)
     mapper = ArtworkMapper()
-    artwork_entity = mapper.api_to_entity(artwork)
-    artwork_entity = await service.update(id, artwork_entity)
+    changes = mapper.model_dump(artwork)
+    artwork_entity = await service.update(id, changes)
     return mapper.entity_to_api(artwork_entity)
 
 

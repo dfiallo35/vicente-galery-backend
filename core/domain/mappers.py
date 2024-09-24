@@ -10,3 +10,7 @@ class BaseMapper(ABC):
     @abstractmethod
     def entity_to_api(self):
         raise NotImplementedError()
+    
+    @abstractmethod
+    def model_dump(self):
+        raise NotImplementedError()

@@ -2,6 +2,7 @@ from abc import ABC
 from abc import abstractmethod
 from decouple import config
 from typing import List
+from typing import Dict
 
 from sqlalchemy import select
 from sqlalchemy import delete
@@ -44,6 +45,9 @@ class IBaseRepository(ABC):
         for condition in conditions:
             query = query.where(condition)
         return query
+    
+    async def get_items(self, results):
+        return [item for (item,) in results]
 
     @abstractmethod
     async def create(self):
@@ -77,7 +81,7 @@ class BaseRepository(IBaseRepository):
         conditions = await self.get_conditions(filter_query)
         query = await self.build_query(conditions)
         results = await self.execute_query(query)
-        return [item for (item,) in results]
+        return await self.get_items(results)
     
     # TODO: Fix adding pagination class, total, page and size info
     async def paginate(self, filter_query: IPaginationBaseFilter):
@@ -85,13 +89,19 @@ class BaseRepository(IBaseRepository):
         query = await self.build_query(conditions)
         query = query.limit(filter_query.limit).offset(filter_query.offset)
         results = await self.execute_query(query)
-        return [item for (item,) in results]
+        return await self.get_items(results)
 
-    # TODO: Fix
-    async def update(self, id: str):
+    async def update(self, id: str, changes: Dict):
         async with self.db.async_session() as session:
             async with session.begin():
-                query = update(self.table_class).where(self.table_class.id == id)
+                query = update(self.table_class).where(self.table_class.id == id).values(**changes)
+                await self.execute_query(query)
+                query = select(self.table_class).where(self.table_class.id == id)
+                results = await self.execute_query(query)
+                items = await self.get_items(results)
+                if items:
+                    return items[0]
+                return None
 
     async def delete(self, id: str):
         async with self.db.async_session() as session:
@@ -103,6 +113,7 @@ class BaseRepository(IBaseRepository):
     async def get(self, id: str):
         query = select(self.table_class).where(self.table_class.id == id)
         results = await self.execute_query(query)
-        for (item,) in results:
-            return item
+        items = await self.get_items(results)
+        if items:
+            return items[0]
         return None

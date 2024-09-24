@@ -12,8 +12,17 @@ GET http://localhost:8000/api/v1/artwork?entity_ids=08b7a0fe-fa30-46df-b10b-feb0
 
 ###
 
-GET http://localhost:8000/api/v1/artwork/08b7a0fe-fa30-46df-b10b-feb089f7fc23
+GET http://localhost:8000/api/v1/artwork/08b7a0fe-fa30-46df-b10b-feb089f7fc25
 
 ###
 
 DELETE http://localhost:8000/api/v1/artwork/98afe6e3-ea0b-4d92-a504-0fc44f5e4584
+
+###
+
+PATCH http://localhost:8000/api/v1/artwork/08b7a0fe-fa30-46df-b10b-feb089f7fc25
+Content-Type: application/json
+
+{
+    "title": "Title Updated"
+}

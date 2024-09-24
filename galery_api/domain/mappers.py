@@ -1,5 +1,6 @@
 from galery_api.domain.models import Artwork
 from galery_api.domain.models import ArtworkInput
+from galery_api.domain.models import ArtworkUpdate
 from galery_api.domain.models import ArtworkOutput
 
 from core.domain.mappers import BaseMapper
@@ -18,3 +19,6 @@ class ArtworkMapper(BaseMapper):
             title=artwork.title,
             description=artwork.description
         )
+
+    def model_dump(self, artwork_update: ArtworkUpdate) -> dict:
+        return artwork_update.model_dump(exclude_none=True)

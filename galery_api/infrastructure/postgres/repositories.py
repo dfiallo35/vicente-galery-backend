@@ -8,7 +8,7 @@ from core.infrastructure.postgres.mappers import IBaseFilterMapper
 
 
 class IArtworkRepository(BaseRepository):
-    table = ArtworkTable
+    table_class = ArtworkTable
     filter_mapper: IBaseFilterMapper = inject.attr(ArtworkFilterMapper)
 
 

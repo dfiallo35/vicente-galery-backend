@@ -7,6 +7,7 @@ from sqlalchemy.pool import NullPool
 
 CONNECTION_TIMEOUT = 60
 CACHE_SIZE = 0
+PREPARED_STATEMENT_CACHE_SIZE = 0
 
 
 # TODO: Investigate about pools and cache size
@@ -24,7 +25,8 @@ class DataBase:
                 pool_pre_ping=True,
                 connect_args={
                     "timeout": CONNECTION_TIMEOUT,
-                    "statement_cache_size": CACHE_SIZE
+                    "statement_cache_size": CACHE_SIZE,
+                    "prepared_statement_cache_size": PREPARED_STATEMENT_CACHE_SIZE
                 }
             )
             self.async_session = sessionmaker(

@@ -1,6 +1,7 @@
 from abc import ABC
 from abc import abstractmethod
 from typing import List
+from typing import Dict
 
 from core.domain.models import BaseEntity
 from core.domain.filters import IBaseFilter
@@ -44,8 +45,9 @@ class BaseService(IBaseService):
         return result
     
     # TODO: Implement update method
-    async def update(self, id: str, entity: BaseEntity) -> BaseEntity:
-        ...
+    async def update(self, id: str, changes: Dict) -> BaseEntity:
+        result = await self.repository.update(id, changes)
+        return self.mapper.table_to_entity(result)
     
     async def get(self, id: str) -> BaseEntity | None:
         result = await self.repository.get(id)
