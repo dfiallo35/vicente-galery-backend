@@ -35,6 +35,25 @@ components:
       - description
       title: ArtworkOutput
       type: object
+    ArtworkUpdate:
+      properties:
+        description:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Description
+        id:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Id
+        title:
+          anyOf:
+          - type: string
+          - type: 'null'
+          title: Title
+      title: ArtworkUpdate
+      type: object
     HTTPValidationError:
       properties:
         detail:
@@ -218,7 +237,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ArtworkInput'
+              $ref: '#/components/schemas/ArtworkUpdate'
         required: true
       responses:
         '200':
