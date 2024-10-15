@@ -1,9 +1,14 @@
+
+GET http://localhost:8000/api/v1/health
+
+###
+
 POST http://localhost:8000/api/v1/artwork
 Content-Type: application/json
 
 {
-    "title": "The Starry Night",
-    "description": "The Starry Night is an oil on canvas painting by Dutch Post-Impressionist painter Vincent van Gogh."
+    "title": "Image 7",
+    "description": "Description 7"
 }
 
 ###
