@@ -17,7 +17,7 @@ GET http://localhost:8000/api/v1/artwork
 
 ###
 
-GET http://localhost:8000/api/v1/artwork/08b7a0fe-fa30-46df-b10b-feb089f7fc25
+GET http://localhost:8000/api/v1/artwork/f12f900c-1459-4694-abea-d9709951d96f
 
 ###
 
